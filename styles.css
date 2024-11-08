@@ -1,0 +1,32 @@
+* {
+    box-sizing: border-box;
+    text-align: center;
+}
+
+body {
+    background-color: black;
+}
+
+.display {
+    border: 2px solid white;
+    height: 50px;
+    width: 280px;
+    margin: 50px auto;
+}
+
+.buttons {
+    display: flex;
+    flex-wrap: wrap;
+    height: 400px;
+    width: 300px;
+    background-color: black;
+    margin: 10px auto;
+}
+
+.button {
+    height: 25%;
+    width: 25%;
+    background-color: white;
+    color: blueviolet;
+    border: 2px solid red;
+}
