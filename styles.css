@@ -6,6 +6,7 @@
 body {
     /* background-color: black; */
     height: 100vh;
+    padding-top: 50px;
     background: linear-gradient(black, navy);
 }
 
@@ -13,10 +14,18 @@ body {
     border: 2px solid white;
     border-radius: 10px;
     box-shadow: inset 2px 2px 5px 2px rgb(239, 239, 229);
-    height: 50px;
-    width: 280px;
-    margin: 50px auto;
+    display: flex;
+    justify-content: end;
+    align-items: center;
+    height: 70px;
+    width: 400px;
+    margin: 30px auto;
+    padding: 10px;
+    color: white;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 2rem;
 }
+
 
 .buttons {
     display: flex;
@@ -40,7 +49,7 @@ body {
     justify-content: center;
     background-color: #002e2f;
     border-radius: 10px;
-    color: rgb(237, 191, 148);
+    color: rgb(238, 231, 220);
 }
 
 .button:hover{
@@ -49,7 +58,7 @@ body {
 }
 
 #plus-minus {
-    font-size: 1.8rem;
+    font-size: 1.9rem;
 }
 
 #clear {
