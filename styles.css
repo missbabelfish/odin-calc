@@ -52,6 +52,10 @@ body {
     color: rgb(238, 231, 220);
 }
 
+.selected {
+    background-color: #48a6a6;
+}
+
 .button:hover{
     background-color: #104f50;
     color: rgb(102, 155, 235);

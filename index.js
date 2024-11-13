@@ -13,6 +13,7 @@ let operB = null;
 
 let currentNumStr = '';
 let operSelected = false;
+let selectedOper = null;
 
 function add(a, b) {
     return a + b
@@ -24,6 +25,10 @@ function mult(a, b) {
     return a * b
 }
 function divide(a, b) {
+    if (b === 0) {
+        clearCalc()
+        return 'HOW DARE YOU SIR'
+    }
     return a / b
 }
 
@@ -34,6 +39,7 @@ function calculate(e) {
     const isOper = button.className.includes('operator')
     
     if (isDigit) {
+        if (operSelected) selectedOper.classList.remove('selected')
         if (!currentNumStr) {
             currentNumStr = buttonId
         } else {
@@ -50,30 +56,75 @@ function calculate(e) {
     }
 
     if (isOper) {
+        if (operB) {
+            console.log('operB exists')
+            result = operate(operA, operator, operB)
+            updateDisplay(result)
+            operA = result
+            operB = null
+            console.log({operA})
+            console.log({operB})
+        }
+        console.log({operB})
+        currentNumStr = ''
+        operSelected = true;
+        selectedOper = button
+        operator = buttonId
+        console.log({selectedOper})
+        console.log({operator})
+        selectedOper.classList.add('selected')
         if (!operSelected) {
-            currentNumStr = ''
-            operSelected = true;
-            operator = buttonId
             console.log(operator)
         }
     }
 
     if (buttonId === '=') {
-        if (operA && operator && operB) {
+        if (typeof operA === 'number' && operator && typeof operB === 'number') {
             result = operate(operA, operator, operB)
+            console.log({result})
             updateDisplay(result)
+            operA = result
+            operator = null
+            operB = null
+            result = null
+            currentNumStr = ''
+            operSelected = false
         }
+        console.log(`after equals a is ${operA} b is ${operB} result is ${result}`)
     }
 
     if (buttonId === 'clear') {
-        operA = null;
-        operator = null;
-        operB = null;
-        result = null;
-        operSelected = false;
-        currentNumStr = ''
-        display.innerText = 0
+        clearCalc()
     }
+
+    if (buttonId === 'del') {
+        backspace()
+    }
+}
+
+function clearCalc() {
+    operA = null;
+    operator = null;
+    operB = null;
+    result = null;
+    operSelected = false;
+    if (selectedOper) selectedOper.classList.remove('selected')
+    selectedOper = null;
+    currentNumStr = ''
+    display.innerText = 0
+}
+
+function backspace() {
+    if (currentNumStr) currentNumStr = currentNumStr.slice(0, -1)
+    console.log(currentNumStr)
+    updateDisplay(currentNumStr)
+    if (operSelected) {
+        operB = +currentNumStr
+    } else {
+        operA = +currentNumStr
+    }
+    console.log({operA})
+    console.log({operB})
 }
 
 function captureButton(e) {
