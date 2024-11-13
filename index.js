@@ -41,9 +41,14 @@ function calculate(e) {
     if (isDigit) {
         if (operSelected) selectedOper.classList.remove('selected')
         if (!currentNumStr) {
-            currentNumStr = buttonId
+            if (buttonId === '.') currentNumStr = '0.'
+            else currentNumStr = buttonId
         } else {
-            currentNumStr += buttonId
+            if (buttonId === '.' && currentNumStr.includes('.')) {
+                currentNumStr = currentNumStr
+            } else {
+                currentNumStr += buttonId
+            }
         }
         if (operSelected) {
             operB = +currentNumStr
@@ -56,25 +61,27 @@ function calculate(e) {
     }
 
     if (isOper) {
-        if (operB) {
-            console.log('operB exists')
-            result = operate(operA, operator, operB)
-            updateDisplay(result)
-            operA = result
-            operB = null
-            console.log({operA})
-            console.log({operB})
-        }
-        console.log({operB})
-        currentNumStr = ''
-        operSelected = true;
-        selectedOper = button
-        operator = buttonId
-        console.log({selectedOper})
-        console.log({operator})
-        selectedOper.classList.add('selected')
         if (!operSelected) {
-            console.log(operator)
+            if (operB) {
+                console.log('operB exists')
+                result = operate(operA, operator, operB)
+                updateDisplay(result)
+                operA = result
+                operB = null
+                console.log({operA})
+                console.log({operB})
+            }
+            console.log({operB})
+            currentNumStr = ''
+            operSelected = true;
+            selectedOper = button
+            operator = buttonId
+            console.log({selectedOper})
+            console.log({operator})
+            selectedOper.classList.add('selected')
+            if (!operSelected) {
+                console.log(operator)
+            }
         }
     }
 
