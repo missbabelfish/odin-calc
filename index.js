@@ -3,15 +3,16 @@ const display = document.querySelector('.display')
 
 display.innerText = 0;
 
-buttons.addEventListener('click', captureInput)
+buttons.addEventListener('click', calculate)
 
-let result = 0;
+let result = null;
 
-let operA;
-let operator;
-let operB;
+let operA = null;
+let operator = null;
+let operB = null;
 
-let currentNum = '';
+let currentNumStr = '';
+let operSelected = false;
 
 function add(a, b) {
     return a + b
@@ -26,15 +27,61 @@ function divide(a, b) {
     return a / b
 }
 
-function captureInput(e) {
-    const button = e.target.closest('.button')
-    const buttonId = button.id || button.querySelector('.button-text').id
-    if (button.className.includes('digit')) {
-        updateDisplay(buttonId)
+function calculate(e) {
+    const button = captureButton(e)
+    const buttonId = captureButtonId(e) 
+    const isDigit = button.className.includes('digit')
+    const isOper = button.className.includes('operator')
+    
+    if (isDigit) {
+        if (!currentNumStr) {
+            currentNumStr = buttonId
+        } else {
+            currentNumStr += buttonId
+        }
+        if (operSelected) {
+            operB = +currentNumStr
+        } else {
+            operA = +currentNumStr
+        }
+        updateDisplay(currentNumStr)
+        console.log({operA})
+        console.log({operB})
     }
-    if (button.className.includes('operator')) {
-        // do the thing to save the number and operator and show the operator
+
+    if (isOper) {
+        if (!operSelected) {
+            currentNumStr = ''
+            operSelected = true;
+            operator = buttonId
+            console.log(operator)
+        }
     }
+
+    if (buttonId === '=') {
+        if (operA && operator && operB) {
+            result = operate(operA, operator, operB)
+            updateDisplay(result)
+        }
+    }
+
+    if (buttonId === 'clear') {
+        operA = null;
+        operator = null;
+        operB = null;
+        result = null;
+        operSelected = false;
+        currentNumStr = ''
+        display.innerText = 0
+    }
+}
+
+function captureButton(e) {
+    return e.target.closest('.button')
+}
+
+function captureButtonId(e) {
+    return e.target.closest('.button').id
 }
 
 function operate(a, oper ,b){
@@ -51,13 +98,6 @@ function operate(a, oper ,b){
     }
 }
 
-function updateDisplay(button) {
-    if (display.innerText === '0') {
-        display.innerText = button
-        currentNum = button;
-    }
-    else {
-        display.innerText += button
-        currentNum += button;
-    }
+function updateDisplay(str) {
+    display.innerText = str
 }
