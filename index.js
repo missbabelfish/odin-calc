@@ -100,6 +100,26 @@ function calculate(e) {
         console.log(`after equals a is ${operA} b is ${operB} result is ${result}`)
     }
 
+    if (buttonId === 'pos-neg') {
+        console.log('posneg')
+        console.log({currentNumStr})
+        if (currentNumStr) {
+            if (currentNumStr.charAt(0) === '-') {
+                currentNumStr = currentNumStr.slice(1)
+            } else {
+                currentNumStr = '-' + currentNumStr
+            }
+        } else {
+            currentNumStr = '-' + currentNumStr
+        }
+        if (operSelected) {
+            operB = +currentNumStr
+        } else operA = +currentNumStr
+        console.log({operA})
+        console.log({operB})
+        updateDisplay(currentNumStr)
+    }
+
     if (buttonId === 'clear') {
         clearCalc()
     }
